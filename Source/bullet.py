@@ -1,7 +1,6 @@
 import math
 
 import pygame
-from pygame.math import Vector2
 from pygame import Surface
 from settings import *
 
@@ -27,7 +26,11 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.y = int(self.y)
 
     def destroy(self):
-        if self.rect.y <= -50 or self.rect.y >= self.screen.get_height() + 50:
+        if (self.rect.left <= 0 or
+            self.rect.left >= self.screen.get_width() or
+            self.rect.top >= self.screen.get_height() or
+            self.rect.bottom <= 0):
+
             self.kill()
 
     def update(self):

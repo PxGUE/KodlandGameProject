@@ -1,7 +1,5 @@
-from time import sleep
-
 import pygame
-from pygame import Surface, Vector2
+from pygame import Surface, Vector2, Rect
 from bullet import Bullet
 from lib import *
 from settings import *
@@ -23,6 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.canShoot = True
         self.shootTime = 0
         self.shoot_cooldown = SHOOT_COOLDOWN
+        self.weapon_offset = Vector2(50,0)
         self.bullets = pygame.sprite.Group()
 
     def player_rotation(self):
@@ -58,9 +57,23 @@ class Player(pygame.sprite.Sprite):
             self.shootTime = pygame.time.get_ticks()
 
     def player_movement(self):
-
         self.hit_box.move_ip(self.velocity)
+
+        if self.hit_box.left < 0:
+            self.hit_box.left = 0
+
+        if self.hit_box.right > self.screen.get_width():
+            self.hit_box.right = self.screen.get_width()
+
+        if self.hit_box.top < 0:
+            self.hit_box.top = 0
+
+        if self.hit_box.bottom > self.screen.get_height():
+            self.hit_box.bottom = self.screen.get_height()
+
         self.rect.center = self.hit_box.center
+
+
 
     def timer_shoot(self):
         if self.shoot_cooldown > 0:
@@ -69,7 +82,8 @@ class Player(pygame.sprite.Sprite):
             self.canShoot = True
 
     def shoot(self):
-        self.bullets.add(Bullet(self.rect.center[0], self.rect.center[1], self.screen, self.angle))
+        bullet_pos = self.rect.center + self.weapon_offset.rotate(self.angle)
+        self.bullets.add(Bullet(bullet_pos[0], bullet_pos[1], self.screen, self.angle))
         self.canShoot = False
         self.shoot_cooldown = SHOOT_COOLDOWN
 

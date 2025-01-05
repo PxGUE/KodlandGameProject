@@ -14,6 +14,7 @@ class Game:
         self.global_sprites.add(self.player)
 
     def run(self):
+
         self.screen.blit(self.background, (0,0))
         self.screen.blit(self.player.image, self.player.rect)
         self.global_sprites.add(self.player.bullets)
