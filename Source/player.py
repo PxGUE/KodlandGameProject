@@ -7,6 +7,7 @@ from settings import *
 import math
 
 class Player(pygame.sprite.Sprite):
+    """Clase base para el jugador"""
     def __init__(self, pos, screen : Surface):
         super().__init__()
         self.image = pygame.transform.rotozoom((pygame.image.load(playerShipBase).convert_alpha()),-90, PLAYER_SCALE)
@@ -26,6 +27,7 @@ class Player(pygame.sprite.Sprite):
         self.bullets = pygame.sprite.Group()
 
     def player_rotation(self):
+        """Rotacion basada en la posicion del mouse"""
         mouse_pos = pygame.mouse.get_pos()
         pos_x = mouse_pos[0] - self.hit_box.centerx
         pos_y = mouse_pos[1] - self.hit_box.centery

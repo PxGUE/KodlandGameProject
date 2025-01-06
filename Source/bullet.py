@@ -6,6 +6,7 @@ from lib import *
 
 
 class Bullet(pygame.sprite.Sprite):
+    """Clase base para las balas"""
     def __init__(self, x, y, screen : Surface, angle: float):
         super().__init__()
         self.x = x
@@ -17,6 +18,7 @@ class Bullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=(x, y))
         self.hit_mask = pygame.mask.from_surface(self.image)
         self.speed = BULLET_SPEED
+        #angulo inicial acorde al angulo al que este apuntando la nave
         self.velocity_x = math.cos(self.angle * (2*math.pi/360)) * self.speed
         self.velocity_y = math.sin(self.angle * (2*math.pi/360)) * self.speed
         self.sound = pygame.mixer.Sound(SHOOT_SOUND)

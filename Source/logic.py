@@ -11,6 +11,7 @@ from settings import *
 
 
 class Game:
+    """Clase para el juego principal"""
     def __init__(self, screen: Surface):
         self.background = pygame.transform.scale(pygame.image.load(background).convert(), (WIDTH, HEIGHT))
         self.screen = screen
@@ -32,7 +33,7 @@ class Game:
         pygame.mixer.Sound.play(self.bg_sound)
 
     def run(self):
-
+        """Se llama cada frame para dibujar el juego, timer spawn, y evaluar colisiones"""
         self.screen.blit(self.background, (0,0))
         self.screen.blit(self.player.image, self.player.rect)
 
@@ -49,6 +50,7 @@ class Game:
         self.global_sprites.draw(self.screen)
         self.global_sprites.update()
 
+        #Colision del jugador
         player_hit = pygame.sprite.spritecollide(self.player_group.sprite, self.asteroid_group, False, pygame.sprite.collide_mask)
         for hit in player_hit:
             player_hit.remove(hit)
@@ -58,6 +60,7 @@ class Game:
             self.bg_sound.stop()
             print("PLAYER HIT")
 
+        #colision de las balas
         for bullet in self.bullet_group:
             bullet_hit = pygame.sprite.spritecollide(bullet, self.asteroid_group, False, pygame.sprite.collide_mask)
             for hit in bullet_hit:

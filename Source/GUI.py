@@ -3,6 +3,7 @@ from pygame import Surface, Vector2
 from lib import *
 
 class Button:
+    """Clase base para los botones"""
     def __init__(self, image, pos:Vector2, text:str,
                  screen : Surface, base_color, hover_color, font=UI_FONT, font_size=18):
 
