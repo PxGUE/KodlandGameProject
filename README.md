@@ -34,6 +34,68 @@ Una vez el jugador sea golpeado por un asteroide el  juego termina y aparecera u
 
 Estructura interna:
 
+El juego se ejecuta desde el archivo main.py en dicho archivo se agrego la siguiente linea de codigo para asegurarnos de que no se ejecute otro archivo por error:
+
+    if __name__ == '__main__':
+        pygame.init()
+        main_menu()
+
+Con esto nos aseguramos del que se inicie correctamente pygame y se ejecute el menu principal.
+
+El archivo main.py se encargar de llamar los loops para el menu principal, el juego y los demas menus.
+
+-Clases:
+
+El juego tiene las siguientes clases principales:
+
+-Player:
+
+Desde esta clase se llamen los atributos necesarios para dibujar la nave, asi como sus colisiones, sistema de disparo, movimiento y rotacion. La clase recive como parametros la pocision inicial para que aparezca en pantalla.
+
+-Asteroid:
+
+Al igual que Player, asteroide tiene los atributos para dibujar los sprites en pantalla, ademas desde el constructor se define la posicion aleatorea del cual es asteroide aparecera. Dicha posicion corresponde a cualquier punto del borde la pantalla y se movera en una direccion aleatorea en linea recta hacia el interori, destruyendose si llega al otro extremo de la pantalla sin que el jugador le alla dado.
+
+    side : str = random.choice(['top', 'bottom', 'left', 'right'])
+
+-Bullet:
+
+Es la muncion de la nave, recibe como parametros la pocion del centro del sprite de la nave y el angulo al que la nave esta apuntando, asi cuando la bala spawnee se movera en dicha direccion.
+
+    self.velocity_x = math.cos(self.angle * (2*math.pi/360)) * self.speed
+    self.velocity_y = math.sin(self.angle * (2*math.pi/360)) * self.speed
+
+-Button
+
+Esta clase dibuja el fondo y el texto de los botones de la interfaz y se hace uso de la siguiente funcion para determinar que el cursos esta sobre el:
+
+     def check_input(self, position)->bool
+
+-Game
+
+Es la clase encarda de spawnear el jugadro, los asteroides y llevar el puntaje. Ademas de manejar el sistema de colisiones el cual se logra distribuyendo en grupos los sprites que aparecen en pantalla:
+
+    self.bullet_group = pygame.sprite.Group()
+    self.asteroid_group = pygame.sprite.Group()
+    self.player_group = pygame.sprite.GroupSingle()
+
+Estos grupos se usan para determinar si un sprite esta colisionando con otro grupo de esa forma se determina, por ejemplo, si una bala golpea un asteroide:
+
+
+    for bullet in self.bullet_group:
+        bullet_hit = pygame.sprite.spritecollide(bullet, self.asteroid_group, False, pygame.sprite.collide_mask)
+        for hit in bullet_hit:
+            pygame.mixer.Sound.play(self.a_sound)
+            self.score += 1
+            bullet_hit.remove(hit)
+            hit.kill()
+            bullet.kill()
+
+Adicionalmente los sprites se ponen un un grupo global el cual se usa para llamar las funciones draw y updte para dibujar en pantalla los elementos sin tener que hacerlo manualemnte a cada uno:
+
+    self.global_sprites.draw(self.screen)
+    self.global_sprites.update()
+  
 
 
 
