@@ -91,11 +91,29 @@ Estos grupos se usan para determinar si un sprite esta colisionando con otro gru
             hit.kill()
             bullet.kill()
 
-Adicionalmente los sprites se ponen un un grupo global el cual se usa para llamar las funciones draw y updte para dibujar en pantalla los elementos sin tener que hacerlo manualemnte a cada uno:
+Adicionalmente los sprites se ponen un un grupo global el cual se usa para llamar las funciones draw y update para dibujar en pantalla los elementos sin tener que hacerlo manualemnte a cada uno:
 
     self.global_sprites.draw(self.screen)
     self.global_sprites.update()
   
+Por ultimo hay dos archivos importantes que se usan para facilitar el llamado de assets y configurar algunas propiedades:
+
+-lib.py
+
+![image_2025-01-06_103152366](https://github.com/user-attachments/assets/18b3da87-e029-4135-8b92-ff33fd305a5a)
+
+Desde este archivo se llaman las rutas a los archivos usados en el juego, sprites, sonidos y fuentes.
+
+-settings.py
+
+![image_2025-01-06_103246225](https://github.com/user-attachments/assets/b8b53906-2a78-482f-83eb-2882af5588a0)
+
+Desde aca se pueden configurar diferentes aspectos del juego com el tamaño de pantalla, la velocidad de las balas, la escala de la nave, su velocidad, entre otros.
+
+ASSETS:
+
+Todos los assets usados para este projecto son de uso libre.
+
 
 
 
