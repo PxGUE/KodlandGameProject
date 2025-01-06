@@ -12,18 +12,19 @@ SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
 BTN_IMAGE = pygame.image.load(BUTTON_BACKGROUND).convert_alpha()
+BACKGROUND_PAUSE = pygame.transform.scale(pygame.image.load(background).convert(), (WIDTH, HEIGHT))
 
 def pause_menu() -> bool:
-    pygame.display.set_caption("Kodland Project: Pause")
+    pygame.display.set_caption("Kodland Project: Pausa")
 
     btn_main_menu = Button(BTN_IMAGE, Vector2(WIDTH / 2, (HEIGHT / 2) - BTN_IMAGE.get_height()), 'MENU', SCREEN,
-                      (255, 255, 255), (255, 255, 255), font_size=50)
+                      (255, 255, 255), (255, 255, 255), font_size=BTN_FONT_SIZE)
 
-    btn_back = Button(BTN_IMAGE, Vector2(WIDTH / 2, HEIGHT / 2), 'BACK', SCREEN,
-                      (255, 255, 255), (255, 255, 255), font_size=50)
+    btn_back = Button(BTN_IMAGE, Vector2(WIDTH / 2, HEIGHT / 2), 'REGRESAR', SCREEN,
+                      (255, 255, 255), (255, 255, 255), font_size=BTN_FONT_SIZE)
 
-    btn_quit = Button(BTN_IMAGE, Vector2(WIDTH / 2, (HEIGHT / 2) + BTN_IMAGE.get_height()), 'QUIT', SCREEN,
-                      (255, 255, 255), (255, 255, 255), font_size=50)
+    btn_quit = Button(BTN_IMAGE, Vector2(WIDTH / 2, (HEIGHT / 2) + BTN_IMAGE.get_height()), 'SALIR', SCREEN,
+                      (255, 255, 255), (255, 255, 255), font_size=BTN_FONT_SIZE)
     pause = True
     while pause:
 
@@ -48,6 +49,8 @@ def pause_menu() -> bool:
                     pygame.quit()
                     sys.exit()
 
+        SCREEN.blit(BACKGROUND_PAUSE, (0, 0))
+
         btn_main_menu.update()
         btn_back.update()
         btn_quit.update()
@@ -58,7 +61,7 @@ def pause_menu() -> bool:
     return False
 
 def main_game():
-    pygame.display.set_caption("Kodland Project: Game")
+    pygame.display.set_caption("Kodland Project")
     game = Game(SCREEN)
 
     play = True
@@ -79,10 +82,13 @@ def main_game():
 
 def main_menu():
 
-    pygame.display.set_caption("Kodland Project: Main menu")
-    btn_play = Button(BTN_IMAGE, Vector2(WIDTH / 2, (HEIGHT / 2) - BTN_IMAGE.get_height()), 'PLAY', SCREEN, (255,255,255), (255,255,255), font_size=50)
-    btn_options = Button(BTN_IMAGE, Vector2(WIDTH / 2, HEIGHT / 2), 'OPTIONS', SCREEN, (255,255,255), (255,255,255), font_size=50)
-    btn_quit = Button(BTN_IMAGE, Vector2(WIDTH / 2, (HEIGHT / 2) + BTN_IMAGE.get_height()), 'QUIT', SCREEN, (255,255,255), (255,255,255), font_size=50)
+    pygame.display.set_caption("Kodland Project: Menu Principal")
+    btn_play = Button(BTN_IMAGE, Vector2(WIDTH / 2, (HEIGHT / 2) - BTN_IMAGE.get_height()), 'JUGAR', SCREEN,
+                      (255,255,255), (255,255,255), font_size=BTN_FONT_SIZE)
+    btn_options = Button(BTN_IMAGE, Vector2(WIDTH / 2, HEIGHT / 2), 'OPCIONES', SCREEN, (255,255,255),
+                         (255,255,255), font_size=BTN_FONT_SIZE)
+    btn_quit = Button(BTN_IMAGE, Vector2(WIDTH / 2, (HEIGHT / 2) + BTN_IMAGE.get_height()), 'SALIR', SCREEN,
+                      (255,255,255), (255,255,255), font_size=BTN_FONT_SIZE)
 
     menu = True
     while menu:

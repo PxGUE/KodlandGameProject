@@ -23,7 +23,6 @@ class Button:
 
     def check_input(self, position)->bool:
        if self.rect.collidepoint(position):
-           print("Click")
            return True
        else:
            return False

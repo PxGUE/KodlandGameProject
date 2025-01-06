@@ -80,7 +80,7 @@ class Player(pygame.sprite.Sprite):
             self.canShoot = True
 
     def shoot(self):
-        bullet_pos = self.hit_box.center #+ self.weapon_offset.rotate(self.angle)
+        bullet_pos = self.rect.center + self.weapon_offset.rotate(self.angle)
         bullet = Bullet(bullet_pos[0], bullet_pos[1], self.screen, self.angle)
         self.bullets.add(bullet)
         self.canShoot = False
