@@ -54,6 +54,7 @@ class Player(pygame.sprite.Sprite):
         mouse_keys = pygame.mouse.get_pressed()
 
         if mouse_keys[0] == True and self.canShoot:
+            self.canShoot = False
             self.shoot()
             self.shootTime = pygame.time.get_ticks()
 
@@ -84,7 +85,6 @@ class Player(pygame.sprite.Sprite):
         bullet_pos = self.rect.center + self.weapon_offset.rotate(self.angle)
         bullet = Bullet(bullet_pos[0], bullet_pos[1], self.screen, self.angle)
         self.bullets.add(bullet)
-        self.canShoot = False
         self.shoot_cooldown = SHOOT_COOLDOWN
 
     def update(self):

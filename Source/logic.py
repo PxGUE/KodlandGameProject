@@ -26,6 +26,10 @@ class Game:
         self.score = 0
         self.font = pygame.font.SysFont(UI_FONT, 25)
         self.playerKill = False
+        self.pk_sound = pygame.mixer.Sound(PLAYER_SOUND)
+        self.a_sound = pygame.mixer.Sound(STEROID_SOUND)
+        self.bg_sound = pygame.mixer.Sound(GAME_SOUND)
+        pygame.mixer.Sound.play(self.bg_sound)
 
     def run(self):
 
@@ -49,12 +53,15 @@ class Game:
         for hit in player_hit:
             player_hit.remove(hit)
             hit.kill()
+            pygame.mixer.Sound.play(self.pk_sound)
             self.playerKill = True
+            self.bg_sound.stop()
             print("PLAYER HIT")
 
         for bullet in self.bullet_group:
             bullet_hit = pygame.sprite.spritecollide(bullet, self.asteroid_group, False, pygame.sprite.collide_mask)
             for hit in bullet_hit:
+                pygame.mixer.Sound.play(self.a_sound)
                 self.score += 1
                 bullet_hit.remove(hit)
                 hit.kill()

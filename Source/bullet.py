@@ -2,7 +2,7 @@ import math
 import pygame
 from pygame import Surface, Vector2
 from settings import *
-from lib import BULLET_IMAGE
+from lib import *
 
 
 class Bullet(pygame.sprite.Sprite):
@@ -19,6 +19,9 @@ class Bullet(pygame.sprite.Sprite):
         self.speed = BULLET_SPEED
         self.velocity_x = math.cos(self.angle * (2*math.pi/360)) * self.speed
         self.velocity_y = math.sin(self.angle * (2*math.pi/360)) * self.speed
+        self.sound = pygame.mixer.Sound(SHOOT_SOUND)
+        pygame.mixer.Sound.play(self.sound)
+
 
     def move(self):
         self.x += self.velocity_x
