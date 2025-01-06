@@ -14,6 +14,55 @@ clock = pygame.time.Clock()
 BTN_IMAGE = pygame.image.load(BUTTON_BACKGROUND).convert_alpha()
 BACKGROUND_PAUSE = pygame.transform.scale(pygame.image.load(background).convert(), (WIDTH, HEIGHT))
 
+def game_over():
+    pygame.display.set_caption("Kodland Project: Game over")
+
+    btn_main_menu = Button(BTN_IMAGE, Vector2(WIDTH / 2, (HEIGHT / 2) - BTN_IMAGE.get_height()), 'MENU', SCREEN,
+                           (255, 255, 255), (255, 255, 255), font_size=BTN_FONT_SIZE)
+
+    btn_restart = Button(BTN_IMAGE, Vector2(WIDTH / 2, HEIGHT / 2), 'REINICAR', SCREEN,
+                      (255, 255, 255), (255, 255, 255), font_size=BTN_FONT_SIZE)
+
+    btn_quit = Button(BTN_IMAGE, Vector2(WIDTH / 2, (HEIGHT / 2) + BTN_IMAGE.get_height()), 'SALIR', SCREEN,
+                      (255, 255, 255), (255, 255, 255), font_size=BTN_FONT_SIZE)
+    pause = True
+    while pause:
+
+        mouse_pose = pygame.mouse.get_pos()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+
+                if btn_main_menu.check_input(mouse_pose):
+                    main_menu()
+                    pause = False
+                    return True
+
+                if btn_restart.check_input(mouse_pose):
+                    main_game()
+                    pause = False
+                    return True
+
+                if btn_quit.check_input(mouse_pose):
+                    pygame.quit()
+                    sys.exit()
+
+        SCREEN.blit(BACKGROUND_PAUSE, (0, 0))
+
+        btn_main_menu.update()
+        btn_restart.update()
+        btn_quit.update()
+
+        pygame.display.update()
+        clock.tick(60)
+
+    return False
+
+
 def pause_menu() -> bool:
     pygame.display.set_caption("Kodland Project: Pausa")
 
@@ -77,6 +126,11 @@ def main_game():
                         play = False
 
         game.run()
+
+        if game.check_game_over():
+            if game_over():
+                play = False
+
         pygame.display.update()
         clock.tick(60)
 

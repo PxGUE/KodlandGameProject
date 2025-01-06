@@ -14,6 +14,7 @@ class Player(pygame.sprite.Sprite):
         self.velocity = Vector2(0, 0)
         self.base_image = self.image
         self.hit_box = self.image.get_rect(center = pos)
+        self.hit_mask = pygame.mask.from_surface(self.image)
         self.rect = self.hit_box.copy()
         self.speed = PLAYER_SPEED
         self.angle = 0

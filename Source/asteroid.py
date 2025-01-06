@@ -10,11 +10,12 @@ class Asteroid(pygame.sprite.Sprite):
     def __init__(self, screen : Surface):
         super().__init__()
         self.screen = screen
-        asteroid_image_01 = pygame.transform.rotozoom(pygame.image.load(ASTEROID_1).convert_alpha(), 0, 1.5)
-        asteroid_image_02 = pygame.transform.rotozoom(pygame.image.load(ASTEROID_2).convert_alpha(), 0, 1.5)
+        asteroid_image_01 = pygame.transform.rotozoom(pygame.image.load(ASTEROID_1).convert_alpha(), 0, random.uniform(MIN_ASTEROID_SIZE, MAX_ASTEROID_SIZE))
+        asteroid_image_02 = pygame.transform.rotozoom(pygame.image.load(ASTEROID_2).convert_alpha(), 0, random.uniform(MIN_ASTEROID_SIZE, MAX_ASTEROID_SIZE))
         self. asteroids = [asteroid_image_01, asteroid_image_02]
         self.image :Surface= random.choice(self.asteroids)
         self.rect = self.image.get_rect()
+        self.hit_mask = pygame.mask.from_surface(self.image)
         self.velocity = random.randint(MIN_ASTEROID_SPEED,MAX_ASTEROID_SPEED)
         self.side = self.get_initial_side()
         self.direction = self.get_initial_direction(self.side)
@@ -85,5 +86,4 @@ class Asteroid(pygame.sprite.Sprite):
     def destroy(self):
         if self.rect.centerx < 0 or self.rect.centerx > WIDTH or \
            self.rect.centery < 0 or self.rect.centery > HEIGHT:
-
             self.kill()
