@@ -1,20 +1,23 @@
 import math
-
 import pygame
-from pygame import Surface
+from pygame import Surface, Vector2
 from settings import *
+from lib import BULLET_IMAGE
+
 
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y, screen : Surface, angle: float):
         super().__init__()
-        self.image = pygame.Surface((10,10))
-        self.image.fill('white')
+        self.angle = angle
+        self.image = pygame.transform.rotozoom(pygame.image.load(BULLET_IMAGE).convert_alpha(), 0, 0.5)
+        self.original = self.image.copy()
+        self.image = pygame.transform.rotate(self.original, self.angle)
         self.rect = self.image.get_rect(center = (x, y))
         self.speed = BULLET_SPEED
         self.x = x
         self.y = y
         self.screen = screen
-        self.angle = angle
+
         self.velocity_x = math.cos(self.angle * (2*math.pi/360)) * self.speed
         self.velocity_y = math.sin(self.angle * (2*math.pi/360)) * self.speed
 

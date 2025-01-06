@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.canShoot = True
         self.shootTime = 0
         self.shoot_cooldown = SHOOT_COOLDOWN
-        self.weapon_offset = Vector2(50,0)
+        self.weapon_offset = Vector2(0,0)
         self.bullets = pygame.sprite.Group()
 
     def player_rotation(self):
@@ -73,8 +73,6 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.center = self.hit_box.center
 
-
-
     def timer_shoot(self):
         if self.shoot_cooldown > 0:
             self.shoot_cooldown -= 1
@@ -82,8 +80,9 @@ class Player(pygame.sprite.Sprite):
             self.canShoot = True
 
     def shoot(self):
-        bullet_pos = self.rect.center + self.weapon_offset.rotate(self.angle)
-        self.bullets.add(Bullet(bullet_pos[0], bullet_pos[1], self.screen, self.angle))
+        bullet_pos = self.hit_box.center #+ self.weapon_offset.rotate(self.angle)
+        bullet = Bullet(bullet_pos[0], bullet_pos[1], self.screen, self.angle)
+        self.bullets.add(bullet)
         self.canShoot = False
         self.shoot_cooldown = SHOOT_COOLDOWN
 
@@ -93,5 +92,6 @@ class Player(pygame.sprite.Sprite):
         self.player_rotation()
         self.timer_shoot()
         self.bullets.update()
+
 
 
